@@ -1,15 +1,16 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
     MESSAGE = (
-            'Тип тренировки: {0}; '
-            'Длительность: {1:.3f} ч.; '
-            'Дистанция: {2:.3f} км; '
-            'Ср. скорость: {3:.3f} км/ч; '
-            'Потрачено ккал: {4:.3f}.'
-            )
+        'Тип тренировки: {0}; '
+        'Длительность: {1:.3f} ч.; '
+        'Дистанция: {2:.3f} км; '
+        'Ср. скорость: {3:.3f} км/ч; '
+        'Потрачено ккал: {4:.3f}.'
+    )
 
     training_type: str
     duration: float
@@ -20,12 +21,12 @@ class InfoMessage:
     def get_message(self):
         """Сформировать сообщение для определенной тренировки"""
         return self.MESSAGE.format(
-            self.training_type, 
-            self.duration, 
-            self.distance, 
-            self.speed, 
+            self.training_type,
+            self.duration,
+            self.distance,
+            self.speed,
             self.calories,
-            )
+        )
 
 @dataclass
 class Training:
@@ -57,7 +58,7 @@ class Training:
             self.get_distance(),
             self.get_mean_speed(),
             self.get_spent_calories(),
-            )
+        )
 
 @dataclass
 class Running(Training):
@@ -72,7 +73,7 @@ class Running(Training):
             (self.SPEED_MULTIPLIER * self.get_mean_speed() - self.SPEED_SHIFT)
             * self.weight / self.M_IN_KM
             * self.duration * self.HOURS_TO_MINUTES
-            )
+        )
 
 @dataclass
 class SportsWalking(Training):
@@ -90,7 +91,7 @@ class SportsWalking(Training):
             + (self.get_mean_speed() ** 2 // self.height)
             * self.MULTIPLIER_2 * self.weight)
             * self.duration * self.HOURS_TO_MINUTES
-            )
+        )
 
 @dataclass
 class Swimming(Training):
@@ -124,7 +125,7 @@ def read_package(workout_type: str, data: list) -> Training:
         'SWM': Swimming, 
         'RUN': Running, 
         'WLK': SportsWalking,
-        }
+    }
 
     if (workout_type in TRAINING_TYPES 
             and len(TRAINING_TYPES[workout_type].__match_args__) == len(data)):
