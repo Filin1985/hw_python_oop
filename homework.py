@@ -128,7 +128,7 @@ def read_package(workout_type: str, data: list) -> Training:
         'RUN': Running,
         'WLK': SportsWalking,
     }
-    
+
     data_len_class = len(TRAINING_TYPES[workout_type].__dataclass_fields__)
 
     if (workout_type in TRAINING_TYPES
@@ -146,7 +146,7 @@ def main(training: Training) -> None:
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40]),
+        ('SWM', [720, 1, 80, 25, 40, 5]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
