@@ -54,7 +54,7 @@ class Training:
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
         return InfoMessage(
-            type(self).__name__,              
+            type(self).__name__,
             self.duration,
             self.get_distance(),
             self.get_mean_speed(),
@@ -81,7 +81,7 @@ class Running(Training):
 @dataclass
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    MULTIPLIER_1= 0.035
+    MULTIPLIER_1 = 0.035
     MULTIPLIER_2 = 0.029
     HOURS_TO_MINUTES = 60
 
@@ -89,12 +89,10 @@ class SportsWalking(Training):
 
     def get_spent_calories(self) -> float:
         """Подсчет потраченных калорий."""
-        return (
-            (self.MULTIPLIER_1 * self.weight
-            + (self.get_mean_speed() ** 2 // self.height)
-            * self.MULTIPLIER_2 * self.weight)
-            * self.duration * self.HOURS_TO_MINUTES
-        )
+        return ((self.MULTIPLIER_1 * self.weight
+                + (self.get_mean_speed() ** 2 // self.height)
+                * self.MULTIPLIER_2 * self.weight)
+                * self.duration * self.HOURS_TO_MINUTES)
 
 
 @dataclass
@@ -126,12 +124,12 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     TRAINING_TYPES = {
-        'SWM': Swimming, 
-        'RUN': Running, 
+        'SWM': Swimming,
+        'RUN': Running,
         'WLK': SportsWalking,
     }
 
-    if (workout_type in TRAINING_TYPES 
+    if (workout_type in TRAINING_TYPES
             and len(TRAINING_TYPES[workout_type].__match_args__) == len(data)):
         return TRAINING_TYPES[workout_type](*data)
     else:
