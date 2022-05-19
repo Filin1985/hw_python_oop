@@ -28,6 +28,7 @@ class InfoMessage:
             self.calories,
         )
 
+
 @dataclass
 class Training:
     """Базовый класс тренировки."""
@@ -60,6 +61,7 @@ class Training:
             self.get_spent_calories(),
         )
 
+
 @dataclass
 class Running(Training):
     """Тренировка: бег."""
@@ -74,6 +76,7 @@ class Running(Training):
             * self.weight / self.M_IN_KM
             * self.duration * self.HOURS_TO_MINUTES
         )
+
 
 @dataclass
 class SportsWalking(Training):
@@ -92,6 +95,7 @@ class SportsWalking(Training):
             * self.MULTIPLIER_2 * self.weight)
             * self.duration * self.HOURS_TO_MINUTES
         )
+
 
 @dataclass
 class Swimming(Training):
