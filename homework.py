@@ -130,7 +130,7 @@ def read_package(workout_type: str, data: list) -> Training:
     }
 
     if (workout_type in TRAINING_TYPES
-            and len(TRAINING_TYPES[workout_type].__match_args__) == len(data)):
+            and len(TRAINING_TYPES[workout_type].__dataclass_fields__) == len(data)):
         return TRAINING_TYPES[workout_type](*data)
     else:
         print('Неверный формат данных')
