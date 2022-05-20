@@ -1,15 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
+TRAINING_TYPES = {
+        'SWM': 'Swimming',
+        'RUN': 'Running',
+        'WLK': 'SportsWalking',
+}
 
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
     MESSAGE = (
-        'Тип тренировки: {0}; '
-        'Длительность: {1:.3f} ч.; '
-        'Дистанция: {2:.3f} км; '
-        'Ср. скорость: {3:.3f} км/ч; '
-        'Потрачено ккал: {4:.3f}.'
+        'Тип тренировки: {training_type}; '
+        'Длительность: {duration:.3f} ч.; '
+        'Дистанция: {distance:.3f} км; '
+        'Ср. скорость: {speed:.3f} км/ч; '
+        'Потрачено ккал: {calories:.3f}.'
     )
 
     training_type: str
@@ -20,13 +25,7 @@ class InfoMessage:
 
     def get_message(self):
         """Сформировать сообщение для определенной тренировки"""
-        return self.MESSAGE.format(
-            self.training_type,
-            self.duration,
-            self.distance,
-            self.speed,
-            self.calories,
-        )
+        return self.MESSAGE.format(**asdict(self))
 
 
 @dataclass
@@ -34,6 +33,7 @@ class Training:
     """Базовый класс тренировки."""
     LEN_STEP = 0.65
     M_IN_KM = 1000
+    HOURS_TO_MINUTES = 60
 
     action: int
     duration: float
@@ -67,7 +67,6 @@ class Running(Training):
     """Тренировка: бег."""
     SPEED_MULTIPLIER = 18
     SPEED_SHIFT = 20
-    HOURS_TO_MINUTES = 60
 
     def get_spent_calories(self) -> float:
         """Подсчет потраченных калорий."""
@@ -83,8 +82,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     MULTIPLIER_1 = 0.035
     MULTIPLIER_2 = 0.029
-    HOURS_TO_MINUTES = 60
-
+    
     height: float
 
     def get_spent_calories(self) -> float:
@@ -123,11 +121,6 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    TRAINING_TYPES = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking,
-    }
 
     data_len_class = len(TRAINING_TYPES[workout_type].__dataclass_fields__)
 
@@ -146,7 +139,7 @@ def main(training: Training) -> None:
 
 if __name__ == '__main__':
     packages = [
-        ('SWM', [720, 1, 80, 25, 40, 5]),
+        ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
         ('WLK', [9000, 1, 75, 180]),
     ]
