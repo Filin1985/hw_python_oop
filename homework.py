@@ -1,8 +1,6 @@
 from dataclasses import dataclass, asdict
 import dataclasses
 
-from attr import field
-
 
 @dataclass
 class InfoMessage:
@@ -80,7 +78,7 @@ class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     MULTIPLIER_1 = 0.035
     MULTIPLIER_2 = 0.029
-    
+
     height: float
 
     def get_spent_calories(self) -> float:
@@ -116,14 +114,16 @@ class Swimming(Training):
         return ((self.get_mean_speed() + self.SPEED_KOEFF)
                 * self.WEIGHT_KOEFF * self.weight)
 
+
 TRAINING_TYPES = {
-        'SWM': Swimming,
-        'RUN': Running,
-        'WLK': SportsWalking,
+    'SWM': Swimming,
+    'RUN': Running,
+    'WLK': SportsWalking,
 }
 
 TYPE_ERROR = 'Тренировки {} нет в нашей базе'
 DATA_NUM_ERROR = 'Количество данных ({}) не совпадает с ожидаемым ({})'
+
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
