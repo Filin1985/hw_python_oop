@@ -1,10 +1,5 @@
 from dataclasses import dataclass, asdict
 
-TRAINING_TYPES = {
-        'SWM': 'Swimming',
-        'RUN': 'Running',
-        'WLK': 'SportsWalking',
-}
 
 @dataclass
 class InfoMessage:
@@ -118,6 +113,11 @@ class Swimming(Training):
         return ((self.get_mean_speed() + self.SPEED_KOEFF)
                 * self.WEIGHT_KOEFF * self.weight)
 
+TRAINING_TYPES = {
+        'SWM': Swimming,
+        'RUN': Running,
+        'WLK': SportsWalking,
+}
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
